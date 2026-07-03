@@ -23,9 +23,27 @@ const clientUrl = process.env.CLIENT_URL
   ? process.env.CLIENT_URL.replace(/\/$/, "")
   : "http://localhost:5173";
 
+const allowedOrigins = [
+  clientUrl,
+  "http://localhost:5173",
+  "http://localhost:5000"
+];
+
 app.use(
   cors({
-    origin: clientUrl,
+    origin: function (origin, callback) {
+      // Allow requests with no origin (like server-to-server or postman)
+      if (!origin) return callback(null, true);
+      
+      const isAllowed = allowedOrigins.includes(origin) ||
+        (origin.endsWith(".vercel.app") && origin.includes("shop-ease"));
+
+      if (isAllowed) {
+        callback(null, true);
+      } else {
+        callback(null, false); // Block other origins safely
+      }
+    },
     credentials: true
   })
 );
