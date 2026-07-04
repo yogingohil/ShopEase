@@ -11,7 +11,7 @@ function sendTokenCookie(res, token) {
   const maxAgeDays = parseInt(process.env.JWT_EXPIRES_IN, 10) || 7;
   res.cookie(cookieName, token, {
     httpOnly: true,
-    sameSite: "lax",
+    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
     secure: process.env.NODE_ENV === "production",
     maxAge: maxAgeDays * 24 * 60 * 60 * 1000
   });

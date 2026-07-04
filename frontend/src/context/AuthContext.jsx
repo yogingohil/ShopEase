@@ -24,24 +24,28 @@ export function AuthProvider({ children }) {
 
   async function register(payload) {
     const { data } = await api.post("/auth/register", payload);
+    if (data.token) localStorage.setItem("shopease_token", data.token);
     setUser(data.user);
     return data.user;
   }
 
   async function login(payload) {
     const { data } = await api.post("/auth/login", payload);
+    if (data.token) localStorage.setItem("shopease_token", data.token);
     setUser(data.user);
     return data.user;
   }
 
   async function adminLogin(payload) {
     const { data } = await api.post("/auth/admin/login", payload);
+    if (data.token) localStorage.setItem("shopease_token", data.token);
     setUser(data.user);
     return data.user;
   }
 
   async function logout() {
     await api.post("/auth/logout");
+    localStorage.removeItem("shopease_token");
     setUser(null);
   }
 
