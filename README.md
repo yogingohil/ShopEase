@@ -77,12 +77,7 @@ npm run dev                 # starts the app on http://localhost:5173
 Open **http://localhost:5173** — the Vite dev server proxies `/api` calls to the backend
 automatically (see `frontend/vite.config.js`).
 
-### Default admin login
 
-```
-Email:    admin@shop.com
-Password: admin123
-```
 
 Change `ADMIN_EMAIL` / `ADMIN_PASSWORD` in `backend/.env` before running `npm run seed`
 if you want different credentials (recommended before deploying anywhere real).
